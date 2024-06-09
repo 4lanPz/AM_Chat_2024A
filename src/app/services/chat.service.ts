@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // Import AngularFirestore
-import * as firebase from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { serverTimestamp } from "firebase/firestore"; 
 import 'firebase/compat/firestore';
 
-// Rest of your code...
-
-// Import FieldValue from @firebase/firestore
 import { FieldValue } from '@firebase/firestore';
 
 export interface User {
@@ -71,14 +66,13 @@ export class ChatService {
     return this.afAuth.signOut();
   }
 
-  // TODO Chat functionality
   
   addChatMessage(msg: string) {
     if (this.currentUser && this.currentUser.uid) {
       return this.afs.collection('messages').add({
         msg: msg,
         from: this.currentUser.uid,
-        createdAt: serverTimestamp() // Use serverTimestamp() instead of a function
+        createdAt: serverTimestamp()
       });
     } else {
       throw new Error('No user is currently signed in');
